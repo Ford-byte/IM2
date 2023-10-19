@@ -1,0 +1,25 @@
+<?php require_once('formHead.php'); ?> 
+<?php require_once('formFoot.php'); ?> 
+
+    INSERT INTO assignment(assignment_name) VALUES("Trial");
+
+    SET @lastID = LAST_INSERT_ID();
+
+    INSERT INTO assignment_list(assignment_id)
+    SELECT @lastID
+    FROM student;
+
+     INSERT INTO assignment(assignment_name) VALUES("Trial");
+
+    SET @lastID = LAST_INSERT_ID();
+
+    INSERT INTO assignment_list(assignment_id,student_id)
+    SELECT @lastID , student_id
+    FROM student;
+
+    SELECT al.ass_id, a.assignment_name, a.subject,a.teachers_id, t.fname, s.fname, s.lname , al.student_id 
+FROM assignment_list al
+left JOIN assignment a ON al.assignment_id = a.id
+LEFT JOIN teacher t ON a.teachers_id = t.teachers_id
+left JOIN student s ON al.student_id = s.student_id
+WHERE al.student_id = 21;
